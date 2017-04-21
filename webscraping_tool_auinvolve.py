@@ -18,21 +18,21 @@ uClient.close()
 # setting up soup recipe
 page_soup = soup(page_html, "html.parser")
 
-# setting cooking timer for soup
-def canContinue(page_check):
+# finding max cooking time for soup
+def paginationLimit(page_check):
     paginationContainer = page_check.findAll("div", {"class" : "pagination"})
-    strTemp = paginationContainer[0].span.text
-    numTemp = [int(s) for s in strTestEnd.split() if s.isdigit()]
-    if numTemp[2] - numTemp[1] > 0:
-        return True
-
-    return False;
+    str_temp = test_soup[0].a.next_sibling.next_sibling['href']
+    page_number_location = len(str_temp) - 1
+    ret_val = str_temp[page_number_location]
+    return ret_val
 
 # main loop
+MAX_PAGE = paginationLimit(page_soup)
+for page_index in range(1, MAX_PAGE):
+
 while canContinue(page_soup):
     #grabbing soup ingredients
     primaryContainers = page_soup.findAll("tr", {"class" : "gridrow"})
     partnerContainters = page_soup.findAll("tr", {"class" : "gridrow_alternate"})
 
     for primaryContainer in primaryContainers:
-        
