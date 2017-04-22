@@ -8,6 +8,7 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 
 # login function here
+isLoggedIn = False
 
 # finding max cooking time for soup
 def paginationLimit(page_check):
@@ -40,14 +41,14 @@ MAIN_URL = 'https://auburn.collegiatelink.net'
 PARTNER_URL = '/organization/ewb/roster/members?Direction=Ascending&page='
 
 # file write setup
-# filename = "auinvolve_roster_extraction.csv"
-# f = open(filename, 'w')
-# headers = "First Name,Last Name,Member Since"
-# f.write(headers)
+filename = "auinvolve_roster_extraction.csv"
+f = open(filename, 'w')
+if isLoggedIn:
+    header_extension = ",Email"
+headers = "First Name,Last Name,Member Since" + header_extension +"\n"
+f.write(headers)
 
 # main loop
-print("Max number of pages: " + MAX_PAGE)
-print("Game time...")
 for page_index in range(1, int(MAX_PAGE) + 1):
 
     # redirects url to roster only section for extraction
@@ -73,10 +74,21 @@ for page_index in range(1, int(MAX_PAGE) + 1):
     # idea: use concatenation to modify these data grabbing lines
     # instead of writing more than one function.
     for name_container in name_containers:
+        # first_name = name_container.td.next_sibling.string
+        # last_name = name_container.td.next_sibling.next_sibling.string
+        # date_joined = name_container.td.next_sibling.next_sibling.next_sibling.string
+        if isLoggedIn:
+            print("stuff")
+            # change link???
+
         first_name = name_container.td.next_sibling.string
         last_name = name_container.td.next_sibling.next_sibling.string
         date_joined = name_container.td.next_sibling.next_sibling.next_sibling.string
 
-        print("first name: " + first_name)
-        print("last name: " + last_name)
-        print("Member Since: " + date_joined)
+        print("First Name: " + first_name)
+        print("Last Name: " + last_name)
+        print("Member Since: " + date_joined + "\n")
+
+        f.write(first_name + "," + last_name + "," + date_joined + "\n")
+
+f.close()
