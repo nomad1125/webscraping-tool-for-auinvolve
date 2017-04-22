@@ -44,8 +44,9 @@ for page_index in range(1, MAX_PAGE):
     page_html = uClient.read()
     uClient.close()
 
-    #grabbing soup ingredients
-    primaryContainers = page_soup.findAll("tr", {"class" : "gridrow"})
-    partnerContainters = page_soup.findAll("tr", {"class" : "gridrow_alternate"})
+    # grabbing soup ingredients
+    containers = page_soup.findAll("tr", {"class" : "gridrow"})
 
-    for primaryContainer in primaryContainers:
+    # begin souping
+    for container in containers:
+        first_person = container
