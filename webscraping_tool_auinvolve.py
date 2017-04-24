@@ -79,11 +79,11 @@ PARTNER_URL = '/organization/ewb/roster/members?Direction=Ascending&page='
 # file write setup
 filename = "auinvolve_roster_extraction.csv"
 f = open(filename, 'w')
-header_extension = ""
 if isLoggedIn:
     header_extension = ",Email"
 
 else:
+    header_extension = ""
     print("WARNING: Not logged into AU Involve\n" +
           "\tSome names may be missing.\n")
 
